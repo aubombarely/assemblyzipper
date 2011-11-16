@@ -1,0 +1,35 @@
+INTRODUCTION:
+
+     AssemblyZipper will be a pipeline to integrate two assemblies from
+  the same species.
+
+     One of the assemblies should be defined as Reference (usually the bigger),
+  and the other as Query. This pipeline will have the following steps:
+
+  1. Query fragmentation:
+     
+     Query assembly will be fragmented into 100 bp fragments.
+
+  2. Query framents mapping:
+  
+     These fragments will be mapped with the Reference asssembly using a NGS
+     mapping tool such as bwa.
+
+  3. Overlaps processing and classification:
+
+     The mapping coordinates will be processed and the Query sequences will
+     be classified according the match and the overlap.
+
+     +----------------+------------------------+------------------+
+     | Matches Number | Overlap Type           | Classification   |
+     +----------------+------------------------+------------------+
+     | 1              | Full                   | Redundant        |
+     | 1              | Partial                | Extension        |
+     | 2              | Partial No Overlapping | Gap-Join         |
+     | 2              | Partial Overlapping    | Overlap-Join     |
+     | >2             | Partial                | Conflict         |
+     +----------------+------------------------+------------------+
+
+  4. Sequence Clustering:
+
+     Starting with the Extension Overlaps, it will get 
